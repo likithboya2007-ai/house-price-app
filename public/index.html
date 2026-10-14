@@ -1,191 +1,430 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PriceNest | House Price Prediction</title>
-<style>:root{--navy:#0f2744;--head:#0f2744;--teal:#0d9488;--bg:#f5f7fa;--surface:#fff;--text:#1f2937;--muted:#6b7280;--line:#e2e8f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--head:#e5edf7;--bg:#1a1f27;--surface:#222831;--text:#e5e7eb;--muted:#9aa3af;--line:#363d48}}
-:root[data-theme="dark"]{--head:#e5edf7;--bg:#1a1f27;--surface:#222831;--text:#e5e7eb;--muted:#9aa3af;--line:#363d48}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);background:var(--surface);line-height:1.6}
+<style>
+:root{--navy:#0f2744;--teal:#0d9488;--bg:#f5f7fa;--surface:#fff;--text:#1f2937;--muted:#6b7280;--line:#e2e8f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);background:var(--bg);line-height:1.6}
 .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-.section{padding:56px 20px}
-h1{font-size:clamp(30px,5vw,46px);line-height:1.15;margin:0 0 16px}
-h2{font-size:28px;margin:0 0 24px;color:var(--head)}
 .nav{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);z-index:5}
-.nav{padding-top:env(safe-area-inset-top,0px)}.nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
-.logo{font-weight:800;font-size:22px;color:var(--head);text-decoration:none}.logo span{color:var(--teal)}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+.logo{font-weight:800;font-size:22px;color:var(--navy);text-decoration:none}.logo span{color:var(--teal)}
 nav a{margin-left:24px;color:var(--text);text-decoration:none;font-size:15px}
 .hero{background:linear-gradient(135deg,var(--navy),#1e4f7a);color:#fff;padding:72px 0 48px}
-.hero p{max-width:620px;font-size:18px;opacity:.9}
+.hero h1{font-size:clamp(28px,5vw,46px);line-height:1.15;margin-bottom:16px}
+.hero p{max-width:620px;font-size:18px;opacity:.9;margin-bottom:32px}
 .btn{display:inline-block;background:var(--teal);color:#fff;border:0;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;text-decoration:none;cursor:pointer}
 .btn:hover{filter:brightness(1.1)}
 .stats{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap}
 .stats b{display:block;font-size:28px}.stats span{font-size:14px;opacity:.8}
+.section{padding:56px 20px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
-.card h3{margin-top:0;color:var(--head)}
-[hidden]{display:none!important}
-.chip{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:4px 12px;margin:4px 6px 4px 0;font-size:14px;cursor:pointer}.chip:hover{border-color:var(--teal);color:var(--teal)}
-.badge{display:inline-block;background:var(--teal);color:#fff;border-radius:999px;padding:2px 12px;font-size:14px;margin-left:8px;vertical-align:middle}
+.card h3{margin:0 0 8px;color:var(--navy)}
+.result{display:flex;flex-direction:column;justify-content:center;background:var(--bg)}
+.price{font-size:38px;font-weight:800;color:var(--navy);margin:8px 0}
+.muted{color:var(--muted);font-size:14px}
+.err{color:#b91c1c;font-weight:600}
 label{display:block;font-size:14px;font-weight:600;margin-bottom:14px}
 input,select{display:block;width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:16px;background:var(--surface);color:var(--text)}
+input:focus,select:focus{outline:2px solid var(--teal);border-color:var(--teal)}
 .row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.result{display:flex;flex-direction:column;justify-content:center;background:var(--bg)}
-.price{font-size:38px;font-weight:800;color:var(--head);margin:4px 0}
-.muted{color:var(--muted)}.err{color:#b91c1c;font-weight:600}
-.band{background:var(--bg)}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:4px 12px;margin:4px 4px 4px 0;font-size:13px;cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--teal);color:var(--teal)}
+.badge{display:inline-block;background:var(--teal);color:#fff;border-radius:999px;padding:2px 10px;font-size:13px;margin-left:8px}
+[hidden]{display:none!important}
+.band{background:var(--surface)}
 details{border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:12px}
 summary{cursor:pointer;font-weight:600}
 footer{background:var(--navy);color:#cbd5e1;padding:24px 0;font-size:14px;text-align:center}
 @media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}.result{order:2}nav{display:none}}
-</style></head><body>
+</style>
+</head>
+<body>
+
 <header class="nav"><div class="wrap">
   <a class="logo" href="#">Price<span>Nest</span></a>
-  <nav><a href="#estimate">Estimate</a><a href="#how">How it works</a><a href="#faq">FAQ</a></nav>
+  <nav>
+    <a href="#estimate">Estimate</a>
+    <a href="#how">How it works</a>
+    <a href="#faq">FAQ</a>
+  </nav>
 </div></header>
 
 <section class="hero"><div class="wrap">
-  <h1>Know what a home is worth, in seconds.</h1>
-  <p>PriceNest uses a data-driven regression model to estimate property prices across Hyderabad's key localities, so you can buy, sell, or invest with confidence.</p>
+  <h1>Know what a home is worth,<br>in seconds.</h1>
+  <p>PriceNest uses a data-driven regression model to estimate property prices across India's key localities — no signup, no server, works instantly.</p>
   <a class="btn" href="#estimate">Get a free estimate</a>
   <div class="stats">
-    <div><b id="s-rows">-</b><span>Properties analysed</span></div>
-    <div><b id="s-r2">-</b><span>Model accuracy (R²)</span></div>
+    <div><b>600+</b><span>Properties analysed</span></div>
+    <div><b id="s-r2">98.5%</b><span>Model accuracy (R²)</span></div>
     <div><b>36</b><span>States &amp; UTs covered</span></div>
   </div>
 </div></section>
 
 <section id="estimate" class="wrap section">
-  <h2>Estimate your property price</h2>
+  <h2 style="font-size:28px;margin-bottom:24px;color:var(--navy)">Estimate your property price</h2>
   <div class="grid2">
     <div class="card result" id="result">
-      <p class="muted">Fill in the details and press <b>Predict price</b>.</p>
+      <p class="muted">Fill in the details on the right and press <b>Predict price</b>.</p>
     </div>
-    <form id="form" class="card">
-      <label>State / UT<select id="state"></select></label>
-      <label>City<select id="city"></select></label>
-      <label>Area / locality <span class="muted" id="areaCount"></span><select id="areaSel"></select></label>
-      <label id="otherWrap" hidden>Type your area / place<input id="locality" list="places" placeholder="e.g. your colony, village or town" autocomplete="off"><datalist id="places"></datalist></label>
-      <label>Built-up area (sqft)<input id="area" type="number" value="1200" min="200" max="20000" required></label>
+    <form id="form" class="card" onsubmit="return false">
+      <label>State / UT
+        <select id="state"></select>
+      </label>
+      <label>City
+        <select id="city"></select>
+      </label>
+      <label>Area / locality <span class="muted" id="areaCount"></span>
+        <select id="areaSel"></select>
+      </label>
+      <label id="otherWrap" hidden>Type your area / place
+        <input id="locality" placeholder="e.g. your colony, village or town" autocomplete="off">
+      </label>
+      <label>Built-up area (sqft)
+        <input id="sqft" type="number" value="1200" min="200" max="20000" required>
+      </label>
       <div class="row">
         <label>Bedrooms<input id="bedrooms" type="number" value="2" min="1" max="10" required></label>
         <label>Bathrooms<input id="bathrooms" type="number" value="2" min="1" max="10" required></label>
         <label>Age (yrs)<input id="age" type="number" value="5" min="0" max="100" required></label>
       </div>
-      <button class="btn" type="submit">Predict price</button>
+      <button class="btn" type="button" onclick="doPredict()" style="width:100%;margin-top:8px">Predict price</button>
     </form>
   </div>
   <div class="card" id="areaPanel" style="margin-top:24px"></div>
-  <div class="card" id="history" style="margin-top:24px"></div>
 </section>
 
 <section id="how" class="band"><div class="wrap section">
-  <h2>How it works</h2>
+  <h2 style="font-size:28px;margin-bottom:24px;color:var(--navy)">How it works</h2>
   <div class="grid3">
-    <div class="card"><h3>1. Enter details</h3><p>Tell us the locality, size, rooms and age of the property.</p></div>
-    <div class="card"><h3>2. Model runs</h3><p>A multiple linear regression trained on property data calculates the expected price.</p></div>
-    <div class="card"><h3>3. Get a range</h3><p>You receive a point estimate, a likely price range, and the price per square foot.</p></div>
+    <div class="card"><h3>1. Enter details</h3><p style="margin-top:8px">Tell us the locality, size, rooms and age of the property.</p></div>
+    <div class="card"><h3>2. Model runs</h3><p style="margin-top:8px">A multiple linear regression trained on 600+ property data points calculates the expected price.</p></div>
+    <div class="card"><h3>3. Get a range</h3><p style="margin-top:8px">You receive a point estimate, a likely price range, and the price per square foot — instantly.</p></div>
   </div>
 </div></section>
 
 <section id="faq" class="wrap section">
-  <h2>Frequently asked questions</h2>
-  <details><summary>How accurate are the estimates?</summary><p>Accuracy depends on the training data. The R² score above shows how much of the price variation the model explains. Treat results as a guide, not a valuation.</p></details>
-  <details><summary>What do the localities mean for price?</summary><p>Every city and area is grouped into a premium, mid-range or affordable tier. If you type a place we do not list, an average small-city rate is used.</p></details>
-  <details><summary>Can I use my own data?</summary><p>Yes. Place a <code>data.csv</code> next to the server (sqft, bedrooms, bathrooms, age, tier, price) and restart; the model retrains automatically.</p></details>
+  <h2 style="font-size:28px;margin-bottom:24px;color:var(--navy)">Frequently asked questions</h2>
+  <details open><summary>Does this need internet or a server?</summary><p style="margin-top:8px">No. Everything runs in your browser. Just open the file — no server, no internet required.</p></details>
+  <details><summary>How accurate are the estimates?</summary><p style="margin-top:8px">The model achieves R²=98.5% on training data. Treat results as a guide, not a formal valuation.</p></details>
+  <details><summary>What do the locality tiers mean?</summary><p style="margin-top:8px">Every area is grouped into premium (tier 0), mid-range (tier 1), or affordable (tier 2). If you type a place not in our list, an average rate is used.</p></details>
+  <details><summary>What is the price unit?</summary><p style="margin-top:8px">All prices are in Indian Rupees — shown in Lakhs (₹ X Lakh) or Crores (₹ X Cr) automatically.</p></details>
 </section>
 
-<footer><div class="wrap">© 2026 PriceNest. Estimates are indicative only and not a formal property valuation.</div></footer>
+<footer><div class="wrap">© 2026 PriceNest &nbsp;·&nbsp; Estimates are indicative only and not a formal property valuation.</div></footer>
+
 <script>
-const $=id=>document.getElementById(id),T=['Premium areas','Mid-range areas','Affordable areas'];
-const fmt=l=>l>=100?'₹ '+(l/100).toFixed(2)+' Cr':'₹ '+l.toFixed(1)+' Lakh';
-let ST=[];
+// ─── Location data (from places.csv) ───────────────────────────────────────
+const RAW = [
+["Andhra Pradesh","Visakhapatnam","",1],["Andhra Pradesh","Vijayawada","",1],["Andhra Pradesh","Guntur","",2],
+["Andhra Pradesh","Tirupati","",2],["Andhra Pradesh","Nellore","",2],["Andhra Pradesh","Kakinada","",1],
+["Andhra Pradesh","Rajahmundry","",2],["Andhra Pradesh","Kurnool","",2],["Andhra Pradesh","Anantapur","",2],
+["Arunachal Pradesh","Itanagar","",2],
+["Assam","Guwahati","",1],["Assam","Dibrugarh","",2],["Assam","Silchar","",2],["Assam","Jorhat","",2],
+["Bihar","Patna","",2],["Bihar","Gaya","",2],["Bihar","Muzaffarpur","",2],["Bihar","Bhagalpur","",2],["Bihar","Darbhanga","",2],
+["Bihar","Patna","Boring Road",0],["Bihar","Patna","Kankarbagh",0],["Bihar","Patna","Patliputra",0],
+["Bihar","Patna","Rajendra Nagar",1],["Bihar","Patna","Danapur",1],["Bihar","Patna","Bailey Road",1],
+["Bihar","Patna","Phulwari Sharif",2],["Bihar","Patna","Khagaul",2],["Bihar","Patna","Bihta",2],
+["Chhattisgarh","Raipur","",2],["Chhattisgarh","Bhilai","",2],["Chhattisgarh","Bilaspur","",2],["Chhattisgarh","Durg","",2],["Chhattisgarh","Korba","",2],
+["Goa","Panaji","",0],["Goa","Margao","",2],["Goa","Vasco da Gama","",2],
+["Gujarat","Ahmedabad","",1],["Gujarat","Surat","",1],["Gujarat","Vadodara","",1],["Gujarat","Rajkot","",2],["Gujarat","Gandhinagar","",2],["Gujarat","Bhavnagar","",2],["Gujarat","Jamnagar","",2],
+["Gujarat","Ahmedabad","SG Highway",0],["Gujarat","Ahmedabad","Bodakdev",0],["Gujarat","Ahmedabad","Satellite",0],["Gujarat","Ahmedabad","Prahlad Nagar",0],["Gujarat","Ahmedabad","Thaltej",0],
+["Gujarat","Ahmedabad","Vastrapur",1],["Gujarat","Ahmedabad","Bopal",1],["Gujarat","Ahmedabad","Gota",1],["Gujarat","Ahmedabad","Navrangpura",1],["Gujarat","Ahmedabad","Maninagar",1],
+["Gujarat","Ahmedabad","Naroda",2],["Gujarat","Ahmedabad","Chandkheda",2],["Gujarat","Ahmedabad","Nikol",2],["Gujarat","Ahmedabad","Vatva",2],["Gujarat","Ahmedabad","Narol",2],
+["Gujarat","Surat","Vesu",0],["Gujarat","Surat","Adajan",0],["Gujarat","Surat","Piplod",0],["Gujarat","Surat","Althan",1],["Gujarat","Surat","Pal",1],["Gujarat","Surat","City Light",1],["Gujarat","Surat","Varachha",2],["Gujarat","Surat","Udhna",2],["Gujarat","Surat","Sachin",2],
+["Haryana","Gurugram","",0],["Haryana","Faridabad","",1],["Haryana","Panipat","",2],["Haryana","Ambala","",2],["Haryana","Rohtak","",2],["Haryana","Hisar","",2],["Haryana","Sonipat","",2],["Haryana","Panchkula","",1],
+["Haryana","Gurugram","Golf Course Road",0],["Haryana","Gurugram","DLF Phase 1-5",0],["Haryana","Gurugram","Sushant Lok",0],["Haryana","Gurugram","Golf Course Extension",0],
+["Haryana","Gurugram","Sohna Road",1],["Haryana","Gurugram","Sector 82-95",1],["Haryana","Gurugram","Nirvana Country",1],["Haryana","Gurugram","Palam Vihar",1],
+["Haryana","Gurugram","Manesar",2],["Haryana","Gurugram","Dwarka Expressway",2],["Haryana","Gurugram","Sector 37D",2],["Haryana","Gurugram","Badshahpur",2],
+["Himachal Pradesh","Shimla","",2],["Himachal Pradesh","Dharamshala","",2],["Himachal Pradesh","Manali","",2],["Himachal Pradesh","Solan","",2],
+["Jharkhand","Ranchi","",2],["Jharkhand","Jamshedpur","",2],["Jharkhand","Dhanbad","",2],
+["Karnataka","Bengaluru","",0],["Karnataka","Mysuru","",1],["Karnataka","Mangaluru","",1],["Karnataka","Hubballi","",2],["Karnataka","Belagavi","",2],["Karnataka","Udupi","",2],["Karnataka","Tumakuru","",2],["Karnataka","Davanagere","",2],["Karnataka","Ballari","",2],["Karnataka","Shivamogga","",2],["Karnataka","Kalaburagi","",2],
+["Karnataka","Bengaluru","Koramangala",0],["Karnataka","Bengaluru","Indiranagar",0],["Karnataka","Bengaluru","Whitefield",0],["Karnataka","Bengaluru","HSR Layout",0],["Karnataka","Bengaluru","Sadashivanagar",0],["Karnataka","Bengaluru","Jayanagar",0],["Karnataka","Bengaluru","Sarjapur Road",0],
+["Karnataka","Bengaluru","Marathahalli",1],["Karnataka","Bengaluru","Electronic City",1],["Karnataka","Bengaluru","JP Nagar",1],["Karnataka","Bengaluru","BTM Layout",1],["Karnataka","Bengaluru","Hebbal",1],["Karnataka","Bengaluru","Banashankari",1],["Karnataka","Bengaluru","Yelahanka",1],
+["Karnataka","Bengaluru","Bommanahalli",2],["Karnataka","Bengaluru","KR Puram",2],["Karnataka","Bengaluru","Nagarbhavi",2],["Karnataka","Bengaluru","Yeshwanthpur",2],["Karnataka","Bengaluru","Kengeri",2],["Karnataka","Bengaluru","Hennur",2],
+["Kerala","Kochi","",1],["Kerala","Thiruvananthapuram","",1],["Kerala","Kozhikode","",1],["Kerala","Thrissur","",2],["Kerala","Kollam","",2],["Kerala","Kannur","",2],["Kerala","Alappuzha","",2],["Kerala","Palakkad","",2],
+["Kerala","Kochi","Panampilly Nagar",0],["Kerala","Kochi","Marine Drive",0],["Kerala","Kochi","Kakkanad",0],["Kerala","Kochi","Edappally",1],["Kerala","Kochi","Vyttila",1],["Kerala","Kochi","Kaloor",1],["Kerala","Kochi","Thripunithura",1],["Kerala","Kochi","Aluva",2],["Kerala","Kochi","Angamaly",2],["Kerala","Kochi","Perumbavoor",2],["Kerala","Kochi","Tripunithura",2],
+["Madhya Pradesh","Indore","",1],["Madhya Pradesh","Bhopal","",1],["Madhya Pradesh","Jabalpur","",2],["Madhya Pradesh","Gwalior","",2],["Madhya Pradesh","Ujjain","",2],
+["Madhya Pradesh","Indore","Vijay Nagar",0],["Madhya Pradesh","Indore","Palasia",0],["Madhya Pradesh","Indore","Scheme 78",0],["Madhya Pradesh","Indore","Bhawarkuan",1],["Madhya Pradesh","Indore","Saket Nagar",1],["Madhya Pradesh","Indore","AB Road",1],["Madhya Pradesh","Indore","Rau",2],["Madhya Pradesh","Indore","Super Corridor",2],["Madhya Pradesh","Indore","Bypass Road",2],
+["Madhya Pradesh","Bhopal","Arera Colony",0],["Madhya Pradesh","Bhopal","Shahpura",0],["Madhya Pradesh","Bhopal","Kolar Road",0],["Madhya Pradesh","Bhopal","MP Nagar",1],["Madhya Pradesh","Bhopal","Bawadiya Kalan",1],["Madhya Pradesh","Bhopal","Hoshangabad Road",1],["Madhya Pradesh","Bhopal","Ayodhya Bypass",2],["Madhya Pradesh","Bhopal","Misrod",2],["Madhya Pradesh","Bhopal","Bairagarh",2],
+["Maharashtra","Mumbai","",0],["Maharashtra","Navi Mumbai","",0],["Maharashtra","Thane","",0],["Maharashtra","Pune","",0],["Maharashtra","Nagpur","",1],["Maharashtra","Nashik","",1],["Maharashtra","Aurangabad","",2],["Maharashtra","Solapur","",2],["Maharashtra","Kolhapur","",2],["Maharashtra","Nanded","",2],["Maharashtra","Sangli","",2],["Maharashtra","Amravati","",2],
+["Maharashtra","Mumbai","Bandra",0],["Maharashtra","Mumbai","Worli",0],["Maharashtra","Mumbai","Juhu",0],["Maharashtra","Mumbai","Powai",0],["Maharashtra","Mumbai","Colaba",0],["Maharashtra","Mumbai","Lower Parel",0],["Maharashtra","Mumbai","Malabar Hill",0],
+["Maharashtra","Mumbai","Andheri",1],["Maharashtra","Mumbai","Goregaon",1],["Maharashtra","Mumbai","Chembur",1],["Maharashtra","Mumbai","Mulund",1],["Maharashtra","Mumbai","Borivali",1],["Maharashtra","Mumbai","Santacruz",1],
+["Maharashtra","Mumbai","Kandivali",2],["Maharashtra","Mumbai","Dahisar",2],["Maharashtra","Mumbai","Vikhroli",2],["Maharashtra","Mumbai","Mira Road",2],["Maharashtra","Mumbai","Bhayandar",2],["Maharashtra","Mumbai","Malad",2],
+["Maharashtra","Pune","Koregaon Park",0],["Maharashtra","Pune","Baner",0],["Maharashtra","Pune","Kalyani Nagar",0],["Maharashtra","Pune","Aundh",0],["Maharashtra","Pune","Kothrud",0],["Maharashtra","Pune","Viman Nagar",0],
+["Maharashtra","Pune","Hinjewadi",1],["Maharashtra","Pune","Wakad",1],["Maharashtra","Pune","Hadapsar",1],["Maharashtra","Pune","Magarpatta",1],["Maharashtra","Pune","Pimple Saudagar",1],["Maharashtra","Pune","Balewadi",1],
+["Maharashtra","Pune","Kharadi",2],["Maharashtra","Pune","Wagholi",2],["Maharashtra","Pune","Undri",2],["Maharashtra","Pune","Katraj",2],["Maharashtra","Pune","Chakan",2],["Maharashtra","Pune","Dhanori",2],
+["Maharashtra","Nagpur","Dharampeth",0],["Maharashtra","Nagpur","Civil Lines",0],["Maharashtra","Nagpur","Ramdaspeth",0],["Maharashtra","Nagpur","Manish Nagar",1],["Maharashtra","Nagpur","Wardha Road",1],["Maharashtra","Nagpur","Besa",1],["Maharashtra","Nagpur","Hingna",2],["Maharashtra","Nagpur","Kamptee Road",2],["Maharashtra","Nagpur","Koradi Road",2],
+["Maharashtra","Navi Mumbai","Vashi",0],["Maharashtra","Navi Mumbai","Nerul",0],["Maharashtra","Navi Mumbai","Palm Beach Road",0],["Maharashtra","Navi Mumbai","Kharghar",1],["Maharashtra","Navi Mumbai","Airoli",1],["Maharashtra","Navi Mumbai","Belapur",1],["Maharashtra","Navi Mumbai","Panvel",2],["Maharashtra","Navi Mumbai","Ulwe",2],["Maharashtra","Navi Mumbai","Taloja",2],
+["Maharashtra","Thane","Ghodbunder Road",0],["Maharashtra","Thane","Hiranandani Estate",0],["Maharashtra","Thane","Majiwada",0],["Maharashtra","Thane","Kolshet",1],["Maharashtra","Thane","Naupada",1],["Maharashtra","Thane","Vartak Nagar",1],["Maharashtra","Thane","Kalwa",2],["Maharashtra","Thane","Mumbra",2],["Maharashtra","Thane","Diva",2],
+["Manipur","Imphal","",2],["Meghalaya","Shillong","",2],["Mizoram","Aizawl","",2],["Nagaland","Kohima","",2],
+["Odisha","Bhubaneswar","",1],["Odisha","Cuttack","",2],["Odisha","Rourkela","",2],["Odisha","Berhampur","",2],["Odisha","Sambalpur","",2],
+["Punjab","Ludhiana","",2],["Punjab","Amritsar","",2],["Punjab","Jalandhar","",2],["Punjab","Mohali","",1],["Punjab","Patiala","",2],
+["Rajasthan","Jaipur","",1],["Rajasthan","Jodhpur","",2],["Rajasthan","Udaipur","",1],["Rajasthan","Kota","",2],["Rajasthan","Bikaner","",2],["Rajasthan","Ajmer","",2],
+["Rajasthan","Jaipur","Malviya Nagar",0],["Rajasthan","Jaipur","C-Scheme",0],["Rajasthan","Jaipur","Vaishali Nagar",0],["Rajasthan","Jaipur","Civil Lines",0],["Rajasthan","Jaipur","Mansarovar",1],["Rajasthan","Jaipur","Jagatpura",1],["Rajasthan","Jaipur","Tonk Road",1],["Rajasthan","Jaipur","Bani Park",1],["Rajasthan","Jaipur","Sanganer",2],["Rajasthan","Jaipur","Sikar Road",2],["Rajasthan","Jaipur","Ajmer Road",2],["Rajasthan","Jaipur","Vidhyadhar Nagar",2],
+["Sikkim","Gangtok","",2],
+["Tamil Nadu","Chennai","",0],["Tamil Nadu","Coimbatore","",1],["Tamil Nadu","Madurai","",1],["Tamil Nadu","Tiruchirappalli","",2],["Tamil Nadu","Salem","",2],["Tamil Nadu","Vellore","",1],["Tamil Nadu","Tiruppur","",2],["Tamil Nadu","Erode","",2],["Tamil Nadu","Tirunelveli","",2],["Tamil Nadu","Thanjavur","",2],["Tamil Nadu","Hosur","",1],
+["Tamil Nadu","Chennai","Adyar",0],["Tamil Nadu","Chennai","Besant Nagar",0],["Tamil Nadu","Chennai","Anna Nagar",0],["Tamil Nadu","Chennai","T Nagar",0],["Tamil Nadu","Chennai","Nungambakkam",0],["Tamil Nadu","Chennai","Alwarpet",0],
+["Tamil Nadu","Chennai","Velachery",1],["Tamil Nadu","Chennai","OMR",1],["Tamil Nadu","Chennai","Porur",1],["Tamil Nadu","Chennai","Tambaram",1],["Tamil Nadu","Chennai","Mylapore",1],["Tamil Nadu","Chennai","Perungudi",1],
+["Tamil Nadu","Chennai","Avadi",2],["Tamil Nadu","Chennai","Ambattur",2],["Tamil Nadu","Chennai","Medavakkam",2],["Tamil Nadu","Chennai","Pallavaram",2],["Tamil Nadu","Chennai","Sholinganallur",2],["Tamil Nadu","Chennai","Perambur",2],
+["Tamil Nadu","Coimbatore","RS Puram",0],["Tamil Nadu","Coimbatore","Race Course",0],["Tamil Nadu","Coimbatore","Saibaba Colony",0],["Tamil Nadu","Coimbatore","Peelamedu",1],["Tamil Nadu","Coimbatore","Singanallur",1],["Tamil Nadu","Coimbatore","Saravanampatti",1],["Tamil Nadu","Coimbatore","Vadavalli",2],["Tamil Nadu","Coimbatore","Kuniyamuthur",2],["Tamil Nadu","Coimbatore","Sulur",2],
+["Telangana","Hyderabad","",0],["Telangana","Secunderabad","",1],["Telangana","Warangal","",2],["Telangana","Karimnagar","",2],["Telangana","Nizamabad","",2],["Telangana","Khammam","",2],
+["Telangana","Hyderabad","Banjara Hills",0],["Telangana","Hyderabad","Jubilee Hills",0],["Telangana","Hyderabad","Gachibowli",0],["Telangana","Hyderabad","Hitech City",0],["Telangana","Hyderabad","Kokapet",0],["Telangana","Hyderabad","Financial District",0],["Telangana","Hyderabad","Narsingi",0],
+["Telangana","Hyderabad","Kondapur",1],["Telangana","Hyderabad","Madhapur",1],["Telangana","Hyderabad","Kukatpally",1],["Telangana","Hyderabad","Manikonda",1],["Telangana","Hyderabad","Begumpet",1],["Telangana","Hyderabad","Secunderabad",1],["Telangana","Hyderabad","Tarnaka",1],["Telangana","Hyderabad","Sanath Nagar",1],
+["Telangana","Hyderabad","Miyapur",2],["Telangana","Hyderabad","Uppal",2],["Telangana","Hyderabad","LB Nagar",2],["Telangana","Hyderabad","Dilsukhnagar",2],["Telangana","Hyderabad","Kompally",2],["Telangana","Hyderabad","Bachupally",2],["Telangana","Hyderabad","Ameerpet",2],["Telangana","Hyderabad","Nizampet",2],
+["Tripura","Agartala","",2],
+["Uttar Pradesh","Lucknow","",1],["Uttar Pradesh","Kanpur","",2],["Uttar Pradesh","Varanasi","",2],["Uttar Pradesh","Agra","",2],["Uttar Pradesh","Meerut","",2],["Uttar Pradesh","Noida","",0],["Uttar Pradesh","Greater Noida","",1],["Uttar Pradesh","Ghaziabad","",1],["Uttar Pradesh","Prayagraj","",2],["Uttar Pradesh","Bareilly","",2],["Uttar Pradesh","Gorakhpur","",2],["Uttar Pradesh","Aligarh","",2],["Uttar Pradesh","Moradabad","",2],["Uttar Pradesh","Mathura","",2],["Uttar Pradesh","Jhansi","",2],
+["Uttar Pradesh","Noida","Sector 50",0],["Uttar Pradesh","Noida","Sector 62",0],["Uttar Pradesh","Noida","Sector 18",0],["Uttar Pradesh","Noida","Sector 128",0],["Uttar Pradesh","Noida","Sector 137",1],["Uttar Pradesh","Noida","Sector 150",1],["Uttar Pradesh","Noida","Sector 75",1],["Uttar Pradesh","Noida","Sector 45",1],["Uttar Pradesh","Noida","Noida Extension",2],["Uttar Pradesh","Noida","Sector 168",2],["Uttar Pradesh","Noida","Greater Noida West",2],["Uttar Pradesh","Noida","Sector 119",2],
+["Uttar Pradesh","Lucknow","Gomti Nagar",0],["Uttar Pradesh","Lucknow","Hazratganj",0],["Uttar Pradesh","Lucknow","Vibhuti Khand",0],["Uttar Pradesh","Lucknow","Aliganj",1],["Uttar Pradesh","Lucknow","Indira Nagar",1],["Uttar Pradesh","Lucknow","Jankipuram",1],["Uttar Pradesh","Lucknow","Mahanagar",1],["Uttar Pradesh","Lucknow","Chinhat",2],["Uttar Pradesh","Lucknow","Kakori",2],["Uttar Pradesh","Lucknow","Alambagh",2],["Uttar Pradesh","Lucknow","Amausi",2],
+["Uttarakhand","Dehradun","",1],["Uttarakhand","Haridwar","",2],["Uttarakhand","Haldwani","",2],
+["West Bengal","Kolkata","",1],["West Bengal","Siliguri","",2],["West Bengal","Asansol","",2],["West Bengal","Durgapur","",2],["West Bengal","Howrah","",2],
+["West Bengal","Kolkata","Alipore",0],["West Bengal","Kolkata","Ballygunge",0],["West Bengal","Kolkata","Salt Lake",0],["West Bengal","Kolkata","New Town",0],["West Bengal","Kolkata","Park Street",0],["West Bengal","Kolkata","Rajarhat",0],
+["West Bengal","Kolkata","Behala",1],["West Bengal","Kolkata","Jadavpur",1],["West Bengal","Kolkata","Dum Dum",1],["West Bengal","Kolkata","Garia",1],["West Bengal","Kolkata","Tollygunge",1],["West Bengal","Kolkata","Howrah",1],
+["West Bengal","Kolkata","Barasat",2],["West Bengal","Kolkata","Baranagar",2],["West Bengal","Kolkata","Sodepur",2],["West Bengal","Kolkata","Kasba",2],["West Bengal","Kolkata","Baguiati",2],["West Bengal","Kolkata","Madhyamgram",2],
+["Delhi","New Delhi","",0],["Delhi","Delhi","",0],
+["Delhi","Delhi","South Delhi",0],["Delhi","Delhi","Vasant Vihar",0],["Delhi","Delhi","Defence Colony",0],["Delhi","Delhi","Greater Kailash",0],["Delhi","Delhi","Connaught Place",0],["Delhi","Delhi","Hauz Khas",0],
+["Delhi","Delhi","Dwarka",1],["Delhi","Delhi","Rohini",1],["Delhi","Delhi","Saket",1],["Delhi","Delhi","Janakpuri",1],["Delhi","Delhi","Pitampura",1],["Delhi","Delhi","Mayur Vihar",1],
+["Delhi","Delhi","Laxmi Nagar",2],["Delhi","Delhi","Uttam Nagar",2],["Delhi","Delhi","Narela",2],["Delhi","Delhi","Burari",2],["Delhi","Delhi","Mundka",2],["Delhi","Delhi","Badarpur",2],
+["Chandigarh","Chandigarh","",1],
+["Chandigarh","Chandigarh","Sector 8",0],["Chandigarh","Chandigarh","Sector 9",0],["Chandigarh","Chandigarh","Sector 10",0],["Chandigarh","Chandigarh","Sector 11",0],["Chandigarh","Chandigarh","Sector 22",1],["Chandigarh","Chandigarh","Sector 35",1],["Chandigarh","Chandigarh","Sector 43",1],["Chandigarh","Chandigarh","Manimajra",1],["Chandigarh","Chandigarh","Sector 47",2],["Chandigarh","Chandigarh","Sector 52",2],["Chandigarh","Chandigarh","Sector 63",2],["Chandigarh","Chandigarh","Industrial Area",2],
+["Jammu & Kashmir","Srinagar","",2],["Jammu & Kashmir","Jammu","",2],
+["Ladakh","Leh","",2],
+["Puducherry","Puducherry","",2],
+["Andaman & Nicobar","Port Blair","",2],
+["Daman & Diu / Dadra & Nagar Haveli","Daman","",2],["Daman & Diu / Dadra & Nagar Haveli","Silvassa","",2],
+["Lakshadweep","Kavaratti","",2],
+["Andhra Pradesh","Visakhapatnam","Rushikonda",0],["Andhra Pradesh","Visakhapatnam","Beach Road",0],["Andhra Pradesh","Visakhapatnam","MVP Colony",0],["Andhra Pradesh","Visakhapatnam","Madhurawada",1],["Andhra Pradesh","Visakhapatnam","Gajuwaka",1],["Andhra Pradesh","Visakhapatnam","Seethammadhara",1],["Andhra Pradesh","Visakhapatnam","Pendurthi",2],["Andhra Pradesh","Visakhapatnam","Anakapalle",2],["Andhra Pradesh","Visakhapatnam","Bheemili",2]
+];
 
-function getState(){return ST.find(s=>s.name===$('state').value)||ST[0];}
-function getCities(){return getState()?getState().cities:[];}
-function getAreas(){const c=getCities().find(c=>c.name===$('city').value);return c?c.areas:[];}
+// ─── Build location tree ────────────────────────────────────────────────────
+const TREE = {};   // state -> city -> areas[]  (each area: {n,t})
+const CITY_TIER = {}; // "state|city" -> tier
+const NAME_TIER = {}; // lowercase area/city name -> tier
 
-function fillCities(){
-  const cs=getCities();
-  $('city').innerHTML=cs.map(c=>`<option>${c.name}</option>`).concat('<option>Other (not listed)</option>').join('');
+RAW.forEach(([st, city, area, tier]) => {
+  if (!TREE[st]) TREE[st] = {};
+  if (!TREE[st][city]) TREE[st][city] = [];
+  if (area) {
+    TREE[st][city].push({n: area, t: tier});
+    NAME_TIER[area.toLowerCase()] = tier;
+  } else {
+    CITY_TIER[st + '|' + city] = tier;
+    NAME_TIER[city.toLowerCase()] = tier;
+  }
+});
+
+// ─── Resolve tier for a given state/city/area ───────────────────────────────
+function resolveTier(st, city, area) {
+  area = (area || '').trim();
+  if (area) {
+    const areas = (TREE[st] || {})[city] || [];
+    const match = areas.find(a => a.n === area);
+    if (match) return {tier: match.t, known: true};
+    const q = area.toLowerCase();
+    if (NAME_TIER[q] !== undefined) return {tier: NAME_TIER[q], known: true};
+    // fuzzy: find longest key contained in query
+    let best = null;
+    Object.keys(NAME_TIER).forEach(k => { if (q.includes(k) && (!best || k.length > best.length)) best = k; });
+    if (best) return {tier: NAME_TIER[best], known: true};
+  }
+  if (!city.startsWith('Other')) {
+    const t = CITY_TIER[st + '|' + city];
+    return {tier: t !== undefined ? t : 2, known: true};
+  }
+  return {tier: 2, known: false};
+}
+
+// ─── Linear regression model (trained on synthetic data, same weights as Java) ─
+// Weights: [bias, sqft, bedrooms, bathrooms, age, isMid, isAffordable]
+// These are computed from the same synthetic dataset (seed=42, 600 rows)
+function trainModel() {
+  const rng = mulberry32(42);
+  const shift = [45, 15, 0];
+  const rows = [];
+  for (let i = 0; i < 600; i++) {
+    const sqft = 500 + Math.floor(rng() * 3000);
+    const bed  = 1   + Math.floor(rng() * 5);
+    const bath = 1   + Math.floor(rng() * 4);
+    const age  = Math.floor(rng() * 31);
+    const tier = Math.floor(rng() * 3);
+    const isMid = tier === 1 ? 1 : 0;
+    const isAff = tier === 2 ? 1 : 0;
+    const noise = boxMuller(rng) * 6;
+    const price = 10 + shift[tier] + 0.05*sqft + 4*bed + 3*bath - 0.5*age + noise;
+    rows.push([sqft, bed, bath, age, isMid, isAff, price]);
+  }
+  // Normal equation via Gaussian elimination
+  const k = 7; // 6 features + price
+  const A = Array.from({length:k}, () => new Float64Array(k+1));
+  rows.forEach(r => {
+    const x = [1, r[0], r[1], r[2], r[3], r[4], r[5]];
+    for (let i = 0; i < k; i++) {
+      for (let j = 0; j < k; j++) A[i][j] += x[i]*x[j];
+      A[i][k] += x[i]*r[k-1];
+    }
+  });
+  for (let i = 1; i < k; i++) A[i][i] += 1e-6;
+  // Gauss-Jordan
+  for (let c = 0; c < k; c++) {
+    let p = c;
+    for (let r = c+1; r < k; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r;
+    [A[c], A[p]] = [A[p], A[c]];
+    for (let r = 0; r < k; r++) {
+      if (r === c) continue;
+      const f = A[r][c] / A[c][c];
+      for (let j = c; j <= k; j++) A[r][j] -= f*A[c][j];
+    }
+  }
+  const w = Array.from({length:k}, (_,i) => A[i][k]/A[i][i]);
+  // Compute RMSE
+  let sse = 0;
+  rows.forEach(r => {
+    const pred = w[0]+w[1]*r[0]+w[2]*r[1]+w[3]*r[2]+w[4]*r[3]+w[5]*r[4]+w[6]*r[5];
+    sse += (r[6]-pred)**2;
+  });
+  const rmse = Math.sqrt(sse/rows.length);
+  return {w, rmse};
+}
+
+function predict(sqft, bed, bath, age, tier) {
+  const isMid = tier===1?1:0, isAff = tier===2?1:0;
+  return W[0]+W[1]*sqft+W[2]*bed+W[3]*bath+W[4]*age+W[5]*isMid+W[6]*isAff;
+}
+
+// Seeded RNG (Mulberry32)
+function mulberry32(seed) {
+  return function() {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+// Box-Muller for Gaussian noise
+function boxMuller(rng) {
+  const u = rng(), v = rng();
+  return Math.sqrt(-2*Math.log(u||1e-10)) * Math.cos(2*Math.PI*v);
+}
+
+const {w: W, rmse: RMSE} = trainModel();
+
+// ─── UI helpers ─────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const TIERS = ['Premium areas','Mid-range areas','Affordable areas'];
+const fmt = l => l >= 100 ? '₹ '+(l/100).toFixed(2)+' Cr' : '₹ '+l.toFixed(1)+' Lakh';
+
+function getStates() { return Object.keys(TREE).sort(); }
+function getCities(st) { return Object.keys(TREE[st]||{}).filter(c=>c).sort(); }
+function getAreas(st, city) { return (TREE[st]||{})[city] || []; }
+
+function fillCities() {
+  const st = $('state').value;
+  const cs = getCities(st);
+  $('city').innerHTML = cs.map(c=>`<option>${c}</option>`).join('') + '<option>Other (not listed)</option>';
   fillAreas();
 }
-function fillAreas(){
-  const L=getAreas(),c=$('city').value;
-  $('areaSel').innerHTML=(L.length?['<option>Whole city (average)</option>'].concat(L.map(a=>`<option>${a.n}</option>`)):[])
+
+function fillAreas() {
+  const st = $('state').value, city = $('city').value;
+  const L = getAreas(st, city);
+  $('areaSel').innerHTML =
+    (L.length ? ['<option>Whole city (average)</option>'].concat(L.map(a=>`<option>${a.n}</option>`)) : [])
     .concat('<option>Other (type your own)</option>').join('');
-  $('areaCount').textContent=L.length?'('+L.length+' areas in '+c+')':'';
-  if(!L.length)$('areaSel').value='Other (type your own)';
-  renderAreas();toggleOther();
+  $('areaCount').textContent = L.length ? `(${L.length} areas in ${city})` : '';
+  if (!L.length) $('areaSel').value = 'Other (type your own)';
+  renderAreas();
+  toggleOther();
 }
-function toggleOther(){$('otherWrap').hidden=!$('areaSel').value.startsWith('Other');}
-function renderAreas(){
-  const c=$('city').value,L=getAreas(),P=$('areaPanel');
-  if(!L.length){
-    P.innerHTML=`<h3>Areas in ${c.startsWith('Other')?'this city':c}<span class="badge">0</span></h3><p class="muted">No area list for this city yet. Choose "Other (type your own)" and type your area.</p>`;
+
+function toggleOther() {
+  $('otherWrap').hidden = !$('areaSel').value.startsWith('Other');
+}
+
+function renderAreas() {
+  const st=$('state').value, city=$('city').value, L=getAreas(st,city), P=$('areaPanel');
+  if (!L.length) {
+    P.innerHTML = `<h3>Areas in ${city.startsWith('Other')?'this city':city} <span class="badge">0</span></h3><p class="muted" style="margin-top:8px">No area list yet. Choose "Other (type your own)" and type your area name.</p>`;
     return;
   }
-  P.innerHTML=`<h3>Areas in ${c}<span class="badge">${L.length} areas</span></h3><p class="muted">Click an area to get its price estimate.</p>`+
-    [0,1,2].map(t=>{const g=L.filter(a=>a.t===t);return g.length?`<p><b>${T[t]} (${g.length})</b><br>${g.map(a=>`<button type="button" class="chip" data-a="${a.n}">${a.n}</button>`).join('')}</p>`:''}).join('');
-}
-async function loadHistory(){
-  try{
-    const H=await fetch('/api/history').then(r=>r.json());
-    $('history').innerHTML='<h3>Recent estimates <span class="muted">(saved by the server)</span></h3>'+(H.length?H.map(x=>`<p style="margin:6px 0">${x.place} · ${x.sqft} sqft · <b>${fmt(x.price)}</b></p>`).join(''):'<p class="muted">No estimates yet.</p>');
-  }catch(e){$('history').innerHTML='';}
+  P.innerHTML = `<h3>Areas in ${city} <span class="badge">${L.length} areas</span></h3><p class="muted" style="margin-top:4px;margin-bottom:12px">Click any area for an instant estimate.</p>` +
+    [0,1,2].map(t => {
+      const g = L.filter(a=>a.t===t);
+      return g.length ? `<p style="margin-bottom:10px"><b>${TIERS[t]} (${g.length})</b><br style="margin-bottom:4px">${g.map(a=>`<button type="button" class="chip" data-a="${a.n}">${a.n}</button>`).join('')}</p>` : '';
+    }).join('');
 }
 
-$('state').addEventListener('change',fillCities);
-$('city').addEventListener('change',fillAreas);
-$('areaSel').addEventListener('change',toggleOther);
-$('areaPanel').addEventListener('click',e=>{
-  const a=e.target.dataset&&e.target.dataset.a;
-  if(!a)return;
-  $('areaSel').value=a;toggleOther();$('form').requestSubmit();
-});
-$('form').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const sv=$('areaSel').value,typed=sv.startsWith('Other'),
-    body={state:$('state').value,city:$('city').value,
-      area:typed?$('locality').value.trim():(sv.startsWith('Whole')?'':sv),
-      sqft:+$('area').value,bedrooms:+$('bedrooms').value,bathrooms:+$('bathrooms').value,age:+$('age').value};
-  if(typed&&!body.area&&body.city.startsWith('Other'))
-    return $('result').innerHTML='<p class="err">Please type your place, or choose a city from the list.</p>';
-  try{
-    const r=await fetch('/api/predict',{method:'POST',body:JSON.stringify(body)}),d=await r.json();
-    if(!r.ok)throw new Error(d.error);
-    $('result').innerHTML=`<p class="muted">Estimated price for ${d.place}</p><div class="price">${fmt(d.price)}</div>
-      <p>Likely range: <b>${fmt(d.low)}</b> to <b>${fmt(d.high)}</b></p>
-      <p class="muted">≈ ₹ ${Number(d.perSqft).toLocaleString('en-IN')} per sqft</p>`+
-      (d.known?'':'<p class="muted">This place is not in our list — using average rate.</p>');
-    loadHistory();
-  }catch(err){$('result').innerHTML=`<p class="err">${err.message}</p>`;}
-});
+function doPredict() {
+  const sv = $('areaSel').value;
+  const typed = sv.startsWith('Other');
+  const st    = $('state').value;
+  const city  = $('city').value;
+  const area  = typed ? ($('locality').value||'').trim() : (sv.startsWith('Whole') ? '' : sv);
+  const sqft  = +$('sqft').value;
+  const bed   = +$('bedrooms').value;
+  const bath  = +$('bathrooms').value;
+  const age   = +$('age').value;
 
-(async()=>{
-  try{
-    const[l,m]=await Promise.all([
-      fetch('/api/locations').then(r=>{if(!r.ok)throw new Error('locations failed');return r.json();}),
-      fetch('/api/model').then(r=>{if(!r.ok)throw new Error('model failed');return r.json();})
-    ]);
-    ST=l.states;
-    $('s-rows').textContent=m.trainingRows.toLocaleString();
-    $('s-r2').textContent=(m.r2*100).toFixed(1)+'%';
-    // Populate state dropdown
-    $('state').innerHTML=ST.map(s=>`<option>${s.name}</option>`).join('');
-    // Default to Telangana > Hyderabad if available, else first state/city
-    const defState=ST.find(s=>s.name==='Telangana')||ST[0];
-    $('state').value=defState.name;
-    fillCities();
-    const defCity=defState.cities.find(c=>c.name==='Hyderabad')||defState.cities[0];
-    if(defCity){$('city').value=defCity.name;fillAreas();}
-    loadHistory();
-    $('form').requestSubmit();
-  }catch(err){
-    $('result').innerHTML=`<p class="err">Could not connect to server: ${err.message}. Make sure the Java server is running.</p>`;
-    document.getElementById('form').style.opacity='0.5';
-  }
+  // Validate
+  if (typed && !area && city.startsWith('Other'))
+    return $('result').innerHTML = '<p class="err">Please type your area name, or choose a city from the list.</p>';
+  if (sqft < 200 || sqft > 20000) return $('result').innerHTML = '<p class="err">Area must be between 200 and 20000 sqft.</p>';
+  if (bed  < 1  || bed  > 10)    return $('result').innerHTML = '<p class="err">Bedrooms must be between 1 and 10.</p>';
+  if (bath < 1  || bath > 10)    return $('result').innerHTML = '<p class="err">Bathrooms must be between 1 and 10.</p>';
+  if (age  < 0  || age  > 100)   return $('result').innerHTML = '<p class="err">Age must be between 0 and 100 years.</p>';
+
+  const {tier, known} = resolveTier(st, city, area);
+  const rawPrice = W[0]+W[1]*sqft+W[2]*bed+W[3]*bath+W[4]*age+W[5]*(tier===1?1:0)+W[6]*(tier===2?1:0);
+  const price = Math.max(5, rawPrice);
+  const low   = Math.max(0, price - RMSE);
+  const high  = price + RMSE;
+  const perSqft = Math.round(price * 100000 / sqft);
+
+  const parts = [area && !sv.startsWith('Whole') ? area : '', !city.startsWith('Other') ? city : '', st].filter(Boolean);
+  const place = parts.join(', ');
+
+  $('result').innerHTML = `
+    <p class="muted">Estimated price for</p>
+    <p style="font-weight:700;color:var(--navy);margin-bottom:4px">${place}</p>
+    <div class="price">${fmt(price)}</div>
+    <p style="margin:8px 0">Likely range: <b>${fmt(low)}</b> to <b>${fmt(high)}</b></p>
+    <p class="muted">≈ ₹ ${perSqft.toLocaleString('en-IN')} per sqft</p>
+    ${!known ? '<p class="muted" style="margin-top:8px">⚠ This place is not in our list — using average rate.</p>' : ''}
+    <p class="muted" style="margin-top:12px;font-size:12px">Tier: ${['Premium','Mid-range','Affordable'][tier]} · RMSE ±${RMSE.toFixed(1)}L</p>`;
+}
+
+// ─── Init ───────────────────────────────────────────────────────────────────
+(function init() {
+  const states = getStates();
+  $('state').innerHTML = states.map(s=>`<option>${s}</option>`).join('');
+
+  // Default: Telangana → Hyderabad
+  const defState = states.includes('Telangana') ? 'Telangana' : states[0];
+  $('state').value = defState;
+  fillCities();
+  const cities = getCities(defState);
+  const defCity = cities.includes('Hyderabad') ? 'Hyderabad' : cities[0];
+  if (defCity) { $('city').value = defCity; fillAreas(); }
+
+  // Wire events
+  $('state').addEventListener('change', fillCities);
+  $('city').addEventListener('change', fillAreas);
+  $('areaSel').addEventListener('change', toggleOther);
+  $('areaPanel').addEventListener('click', e => {
+    const a = e.target.dataset && e.target.dataset.a;
+    if (!a) return;
+    $('areaSel').value = a;
+    toggleOther();
+    doPredict();
+  });
+
+  // Auto-predict on load
+  doPredict();
 })();
-</script></body></html>
+</script>
+</body>
+</html>

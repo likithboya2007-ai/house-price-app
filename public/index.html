@@ -102,34 +102,90 @@ footer{background:var(--navy);color:#cbd5e1;padding:24px 0;font-size:14px;text-a
 const $=id=>document.getElementById(id),T=['Premium areas','Mid-range areas','Affordable areas'];
 const fmt=l=>l>=100?'₹ '+(l/100).toFixed(2)+' Cr':'₹ '+l.toFixed(1)+' Lakh';
 let ST=[];
-const cities=()=>ST.find(s=>s.name===$('state').value).cities;
-const areas=()=>{const c=cities().find(c=>c.name===$('city').value);return c?c.areas:[]};
-function fillCities(){$('city').innerHTML=cities().map(c=>c.name).concat('Other (not listed)').map(c=>`<option>${c}</option>`).join('');fillAreas()}
-function fillAreas(){const L=areas(),c=$('city').value;
- $('areaSel').innerHTML=(L.length?['Whole city (average)'].concat(L.map(a=>a.n)):[]).concat('Other (type your own)').map(a=>`<option>${a}</option>`).join('');
- $('areaCount').textContent=L.length?'('+L.length+' areas in '+c+')':'';
- if(!L.length)$('areaSel').value='Other (type your own)';
- renderAreas();toggleOther()}
-function toggleOther(){$('otherWrap').hidden=!$('areaSel').value.startsWith('Other')}
-function renderAreas(){const c=$('city').value,L=areas(),P=$('areaPanel');
- if(!L.length){P.innerHTML=`<h3>Areas in ${c.startsWith('Other')?'this city':c}<span class="badge">0</span></h3><p class="muted">No area list for this city yet. Choose "Other (type your own)" and type your area.</p>`;return}
- P.innerHTML=`<h3>Areas in ${c}<span class="badge">${L.length} areas</span></h3><p class="muted">Click an area to get its price estimate.</p>`+
- [0,1,2].map(t=>{const g=L.filter(a=>a.t===t);return g.length?`<p><b>${T[t]} (${g.length})</b><br>${g.map(a=>`<button type="button" class="chip" data-a="${a.n}">${a.n}</button>`).join('')}</p>`:''}).join('')}
-async function loadHistory(){const H=await fetch('/api/history').then(r=>r.json());
- $('history').innerHTML='<h3>Recent estimates <span class="muted">(saved by the server)</span></h3>'+(H.length?H.map(x=>`<p style="margin:6px 0">${x.place} · ${x.sqft} sqft · <b>${fmt(x.price)}</b></p>`).join(''):'<p class="muted">No estimates yet.</p>')}
-$('state').addEventListener('change',fillCities);$('city').addEventListener('change',fillAreas);$('areaSel').addEventListener('change',toggleOther);
-$('areaPanel').addEventListener('click',e=>{const a=e.target.dataset&&e.target.dataset.a;if(!a)return;$('areaSel').value=a;toggleOther();$('form').requestSubmit()});
-$('form').addEventListener('submit',async e=>{e.preventDefault();
- const sv=$('areaSel').value,typed=sv.startsWith('Other'),
-  body={state:$('state').value,city:$('city').value,area:typed?$('locality').value.trim():(sv.startsWith('Whole')?'':sv),
-  sqft:+$('area').value,bedrooms:+$('bedrooms').value,bathrooms:+$('bathrooms').value,age:+$('age').value};
- if(typed&&!body.area&&body.city.startsWith('Other'))return $('result').innerHTML='<p class="err">Please type your place, or choose a city from the list.</p>';
- try{const r=await fetch('/api/predict',{method:'POST',body:JSON.stringify(body)}),d=await r.json();if(!r.ok)throw new Error(d.error);
-  $('result').innerHTML=`<p class="muted">Estimated price for ${d.place}</p><div class="price">${fmt(d.price)}</div>
-  <p>Likely range: <b>${fmt(d.low)}</b> to <b>${fmt(d.high)}</b></p><p class="muted">≈ ₹ ${Number(d.perSqft).toLocaleString('en-IN')} per sqft</p>`+(d.known?'':'<p class="muted">This place is not in our list, so an average small-city rate was used.</p>');
-  loadHistory()}catch(err){$('result').innerHTML=`<p class="err">${err.message}</p>`}});
-(async()=>{const[l,m]=await Promise.all([fetch('/api/locations').then(r=>r.json()),fetch('/api/model').then(r=>r.json())]);
- ST=l.states;$('s-rows').textContent=m.trainingRows.toLocaleString();$('s-r2').textContent=(m.r2*100).toFixed(1)+'%';
- $('state').innerHTML=ST.map(s=>`<option>${s.name}</option>`).join('');$('state').value='Telangana';fillCities();$('city').value='Hyderabad';fillAreas();
- loadHistory();$('form').requestSubmit()})();
+
+function getState(){return ST.find(s=>s.name===$('state').value)||ST[0];}
+function getCities(){return getState()?getState().cities:[];}
+function getAreas(){const c=getCities().find(c=>c.name===$('city').value);return c?c.areas:[];}
+
+function fillCities(){
+  const cs=getCities();
+  $('city').innerHTML=cs.map(c=>`<option>${c.name}</option>`).concat('<option>Other (not listed)</option>').join('');
+  fillAreas();
+}
+function fillAreas(){
+  const L=getAreas(),c=$('city').value;
+  $('areaSel').innerHTML=(L.length?['<option>Whole city (average)</option>'].concat(L.map(a=>`<option>${a.n}</option>`)):[])
+    .concat('<option>Other (type your own)</option>').join('');
+  $('areaCount').textContent=L.length?'('+L.length+' areas in '+c+')':'';
+  if(!L.length)$('areaSel').value='Other (type your own)';
+  renderAreas();toggleOther();
+}
+function toggleOther(){$('otherWrap').hidden=!$('areaSel').value.startsWith('Other');}
+function renderAreas(){
+  const c=$('city').value,L=getAreas(),P=$('areaPanel');
+  if(!L.length){
+    P.innerHTML=`<h3>Areas in ${c.startsWith('Other')?'this city':c}<span class="badge">0</span></h3><p class="muted">No area list for this city yet. Choose "Other (type your own)" and type your area.</p>`;
+    return;
+  }
+  P.innerHTML=`<h3>Areas in ${c}<span class="badge">${L.length} areas</span></h3><p class="muted">Click an area to get its price estimate.</p>`+
+    [0,1,2].map(t=>{const g=L.filter(a=>a.t===t);return g.length?`<p><b>${T[t]} (${g.length})</b><br>${g.map(a=>`<button type="button" class="chip" data-a="${a.n}">${a.n}</button>`).join('')}</p>`:''}).join('');
+}
+async function loadHistory(){
+  try{
+    const H=await fetch('/api/history').then(r=>r.json());
+    $('history').innerHTML='<h3>Recent estimates <span class="muted">(saved by the server)</span></h3>'+(H.length?H.map(x=>`<p style="margin:6px 0">${x.place} · ${x.sqft} sqft · <b>${fmt(x.price)}</b></p>`).join(''):'<p class="muted">No estimates yet.</p>');
+  }catch(e){$('history').innerHTML='';}
+}
+
+$('state').addEventListener('change',fillCities);
+$('city').addEventListener('change',fillAreas);
+$('areaSel').addEventListener('change',toggleOther);
+$('areaPanel').addEventListener('click',e=>{
+  const a=e.target.dataset&&e.target.dataset.a;
+  if(!a)return;
+  $('areaSel').value=a;toggleOther();$('form').requestSubmit();
+});
+$('form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const sv=$('areaSel').value,typed=sv.startsWith('Other'),
+    body={state:$('state').value,city:$('city').value,
+      area:typed?$('locality').value.trim():(sv.startsWith('Whole')?'':sv),
+      sqft:+$('area').value,bedrooms:+$('bedrooms').value,bathrooms:+$('bathrooms').value,age:+$('age').value};
+  if(typed&&!body.area&&body.city.startsWith('Other'))
+    return $('result').innerHTML='<p class="err">Please type your place, or choose a city from the list.</p>';
+  try{
+    const r=await fetch('/api/predict',{method:'POST',body:JSON.stringify(body)}),d=await r.json();
+    if(!r.ok)throw new Error(d.error);
+    $('result').innerHTML=`<p class="muted">Estimated price for ${d.place}</p><div class="price">${fmt(d.price)}</div>
+      <p>Likely range: <b>${fmt(d.low)}</b> to <b>${fmt(d.high)}</b></p>
+      <p class="muted">≈ ₹ ${Number(d.perSqft).toLocaleString('en-IN')} per sqft</p>`+
+      (d.known?'':'<p class="muted">This place is not in our list — using average rate.</p>');
+    loadHistory();
+  }catch(err){$('result').innerHTML=`<p class="err">${err.message}</p>`;}
+});
+
+(async()=>{
+  try{
+    const[l,m]=await Promise.all([
+      fetch('/api/locations').then(r=>{if(!r.ok)throw new Error('locations failed');return r.json();}),
+      fetch('/api/model').then(r=>{if(!r.ok)throw new Error('model failed');return r.json();})
+    ]);
+    ST=l.states;
+    $('s-rows').textContent=m.trainingRows.toLocaleString();
+    $('s-r2').textContent=(m.r2*100).toFixed(1)+'%';
+    // Populate state dropdown
+    $('state').innerHTML=ST.map(s=>`<option>${s.name}</option>`).join('');
+    // Default to Telangana > Hyderabad if available, else first state/city
+    const defState=ST.find(s=>s.name==='Telangana')||ST[0];
+    $('state').value=defState.name;
+    fillCities();
+    const defCity=defState.cities.find(c=>c.name==='Hyderabad')||defState.cities[0];
+    if(defCity){$('city').value=defCity.name;fillAreas();}
+    loadHistory();
+    $('form').requestSubmit();
+  }catch(err){
+    $('result').innerHTML=`<p class="err">Could not connect to server: ${err.message}. Make sure the Java server is running.</p>`;
+    document.getElementById('form').style.opacity='0.5';
+  }
+})();
 </script></body></html>

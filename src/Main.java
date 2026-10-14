@@ -46,7 +46,7 @@ public class Main {
         }
     }
 
-    static String clean(String s) { return s.replaceAll("[\"\\\\\\r\\n,]", " ").trim(); }
+    static String clean(String s) { return s.replaceAll("[\"\\\\\\r\\n,\\t]", " ").trim(); }
 
     static String str(String body, String key) {
         Matcher m = Pattern.compile("\"" + key + "\"\\s*:\\s*\"([^\"]*)\"").matcher(body);
@@ -75,7 +75,7 @@ public class Main {
             String[] s = lines.get(i).split("\t");
             if (s.length < 4) continue;
             if (n++ > 0) b.append(',');
-            b.append("{\"place\":\"").append(s[1]).append("\",\"sqft\":").append(s[2]).append(",\"price\":").append(s[3]).append('}');
+            b.append("{\"place\":\"").append(clean(s[1])).append("\",\"sqft\":").append(s[2]).append(",\"price\":").append(s[3]).append('}');
         }
         return b.append(']').toString();
     }

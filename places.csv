@@ -1,0 +1,470 @@
+state,city,area,tier
+Andhra Pradesh,Visakhapatnam,,1
+Andhra Pradesh,Vijayawada,,1
+Andhra Pradesh,Guntur,,2
+Andhra Pradesh,Tirupati,,2
+Andhra Pradesh,Nellore,,2
+Andhra Pradesh,Kakinada,,1
+Andhra Pradesh,Rajahmundry,,2
+Andhra Pradesh,Kurnool,,2
+Andhra Pradesh,Anantapur,,2
+Arunachal Pradesh,Itanagar,,2
+Assam,Guwahati,,1
+Assam,Dibrugarh,,2
+Assam,Silchar,,2
+Assam,Jorhat,,2
+Bihar,Patna,,2
+Bihar,Gaya,,2
+Bihar,Muzaffarpur,,2
+Bihar,Bhagalpur,,2
+Bihar,Darbhanga,,2
+Chhattisgarh,Raipur,,2
+Chhattisgarh,Bhilai,,2
+Chhattisgarh,Bilaspur,,2
+Chhattisgarh,Durg,,2
+Chhattisgarh,Korba,,2
+Goa,Panaji,,0
+Goa,Margao,,2
+Goa,Vasco da Gama,,2
+Gujarat,Ahmedabad,,1
+Gujarat,Surat,,1
+Gujarat,Vadodara,,1
+Gujarat,Rajkot,,2
+Gujarat,Gandhinagar,,2
+Gujarat,Bhavnagar,,2
+Gujarat,Jamnagar,,2
+Haryana,Gurugram,,0
+Haryana,Faridabad,,1
+Haryana,Panipat,,2
+Haryana,Ambala,,2
+Haryana,Rohtak,,2
+Haryana,Hisar,,2
+Haryana,Sonipat,,2
+Haryana,Panchkula,,1
+Himachal Pradesh,Shimla,,2
+Himachal Pradesh,Dharamshala,,2
+Himachal Pradesh,Manali,,2
+Himachal Pradesh,Solan,,2
+Jharkhand,Ranchi,,2
+Jharkhand,Jamshedpur,,2
+Jharkhand,Dhanbad,,2
+Karnataka,Bengaluru,,0
+Karnataka,Mysuru,,1
+Karnataka,Mangaluru,,1
+Karnataka,Hubballi,,2
+Karnataka,Belagavi,,2
+Karnataka,Udupi,,2
+Karnataka,Tumakuru,,2
+Karnataka,Davanagere,,2
+Karnataka,Ballari,,2
+Karnataka,Shivamogga,,2
+Karnataka,Kalaburagi,,2
+Kerala,Kochi,,1
+Kerala,Thiruvananthapuram,,1
+Kerala,Kozhikode,,1
+Kerala,Thrissur,,2
+Kerala,Kollam,,2
+Kerala,Kannur,,2
+Kerala,Alappuzha,,2
+Kerala,Palakkad,,2
+Madhya Pradesh,Indore,,1
+Madhya Pradesh,Bhopal,,1
+Madhya Pradesh,Jabalpur,,2
+Madhya Pradesh,Gwalior,,2
+Madhya Pradesh,Ujjain,,2
+Maharashtra,Mumbai,,0
+Maharashtra,Navi Mumbai,,0
+Maharashtra,Thane,,0
+Maharashtra,Pune,,0
+Maharashtra,Nagpur,,1
+Maharashtra,Nashik,,1
+Maharashtra,Aurangabad,,2
+Maharashtra,Solapur,,2
+Maharashtra,Kolhapur,,2
+Maharashtra,Nanded,,2
+Maharashtra,Sangli,,2
+Maharashtra,Amravati,,2
+Manipur,Imphal,,2
+Meghalaya,Shillong,,2
+Mizoram,Aizawl,,2
+Nagaland,Kohima,,2
+Odisha,Bhubaneswar,,1
+Odisha,Cuttack,,2
+Odisha,Rourkela,,2
+Odisha,Berhampur,,2
+Odisha,Sambalpur,,2
+Punjab,Ludhiana,,2
+Punjab,Amritsar,,2
+Punjab,Jalandhar,,2
+Punjab,Mohali,,1
+Punjab,Patiala,,2
+Rajasthan,Jaipur,,1
+Rajasthan,Jodhpur,,2
+Rajasthan,Udaipur,,1
+Rajasthan,Kota,,2
+Rajasthan,Bikaner,,2
+Rajasthan,Ajmer,,2
+Sikkim,Gangtok,,2
+Tamil Nadu,Chennai,,0
+Tamil Nadu,Coimbatore,,1
+Tamil Nadu,Madurai,,1
+Tamil Nadu,Tiruchirappalli,,2
+Tamil Nadu,Salem,,2
+Tamil Nadu,Vellore,,1
+Tamil Nadu,Tiruppur,,2
+Tamil Nadu,Erode,,2
+Tamil Nadu,Tirunelveli,,2
+Tamil Nadu,Thanjavur,,2
+Tamil Nadu,Hosur,,1
+Telangana,Hyderabad,,0
+Telangana,Secunderabad,,1
+Telangana,Warangal,,2
+Telangana,Karimnagar,,2
+Telangana,Nizamabad,,2
+Telangana,Khammam,,2
+Tripura,Agartala,,2
+Uttar Pradesh,Lucknow,,1
+Uttar Pradesh,Kanpur,,2
+Uttar Pradesh,Varanasi,,2
+Uttar Pradesh,Agra,,2
+Uttar Pradesh,Meerut,,2
+Uttar Pradesh,Noida,,0
+Uttar Pradesh,Greater Noida,,1
+Uttar Pradesh,Ghaziabad,,1
+Uttar Pradesh,Prayagraj,,2
+Uttar Pradesh,Bareilly,,2
+Uttar Pradesh,Gorakhpur,,2
+Uttar Pradesh,Aligarh,,2
+Uttar Pradesh,Moradabad,,2
+Uttar Pradesh,Mathura,,2
+Uttar Pradesh,Jhansi,,2
+Uttarakhand,Dehradun,,1
+Uttarakhand,Haridwar,,2
+Uttarakhand,Haldwani,,2
+West Bengal,Kolkata,,1
+West Bengal,Siliguri,,2
+West Bengal,Asansol,,2
+West Bengal,Durgapur,,2
+West Bengal,Howrah,,2
+Delhi,New Delhi,,0
+Delhi,Delhi,,0
+Chandigarh,Chandigarh,,1
+Jammu & Kashmir,Srinagar,,2
+Jammu & Kashmir,Jammu,,2
+Ladakh,Leh,,2
+Puducherry,Puducherry,,2
+Andaman & Nicobar,Port Blair,,2
+Daman & Diu / Dadra & Nagar Haveli,Daman,,2
+Daman & Diu / Dadra & Nagar Haveli,Silvassa,,2
+Lakshadweep,Kavaratti,,2
+Telangana,Hyderabad,Banjara Hills,0
+Telangana,Hyderabad,Jubilee Hills,0
+Telangana,Hyderabad,Gachibowli,0
+Telangana,Hyderabad,Hitech City,0
+Telangana,Hyderabad,Kokapet,0
+Telangana,Hyderabad,Financial District,0
+Telangana,Hyderabad,Narsingi,0
+Telangana,Hyderabad,Kondapur,1
+Telangana,Hyderabad,Madhapur,1
+Telangana,Hyderabad,Kukatpally,1
+Telangana,Hyderabad,Manikonda,1
+Telangana,Hyderabad,Begumpet,1
+Telangana,Hyderabad,Secunderabad,1
+Telangana,Hyderabad,Tarnaka,1
+Telangana,Hyderabad,Sanath Nagar,1
+Telangana,Hyderabad,Miyapur,2
+Telangana,Hyderabad,Uppal,2
+Telangana,Hyderabad,LB Nagar,2
+Telangana,Hyderabad,Dilsukhnagar,2
+Telangana,Hyderabad,Kompally,2
+Telangana,Hyderabad,Bachupally,2
+Telangana,Hyderabad,Ameerpet,2
+Telangana,Hyderabad,Nizampet,2
+Karnataka,Bengaluru,Koramangala,0
+Karnataka,Bengaluru,Indiranagar,0
+Karnataka,Bengaluru,Whitefield,0
+Karnataka,Bengaluru,HSR Layout,0
+Karnataka,Bengaluru,Sadashivanagar,0
+Karnataka,Bengaluru,Jayanagar,0
+Karnataka,Bengaluru,Sarjapur Road,0
+Karnataka,Bengaluru,Marathahalli,1
+Karnataka,Bengaluru,Electronic City,1
+Karnataka,Bengaluru,JP Nagar,1
+Karnataka,Bengaluru,BTM Layout,1
+Karnataka,Bengaluru,Hebbal,1
+Karnataka,Bengaluru,Banashankari,1
+Karnataka,Bengaluru,Yelahanka,1
+Karnataka,Bengaluru,Bommanahalli,2
+Karnataka,Bengaluru,KR Puram,2
+Karnataka,Bengaluru,Nagarbhavi,2
+Karnataka,Bengaluru,Yeshwanthpur,2
+Karnataka,Bengaluru,Kengeri,2
+Karnataka,Bengaluru,Hennur,2
+Maharashtra,Mumbai,Bandra,0
+Maharashtra,Mumbai,Worli,0
+Maharashtra,Mumbai,Juhu,0
+Maharashtra,Mumbai,Powai,0
+Maharashtra,Mumbai,Colaba,0
+Maharashtra,Mumbai,Lower Parel,0
+Maharashtra,Mumbai,Malabar Hill,0
+Maharashtra,Mumbai,Andheri,1
+Maharashtra,Mumbai,Goregaon,1
+Maharashtra,Mumbai,Chembur,1
+Maharashtra,Mumbai,Mulund,1
+Maharashtra,Mumbai,Borivali,1
+Maharashtra,Mumbai,Santacruz,1
+Maharashtra,Mumbai,Kandivali,2
+Maharashtra,Mumbai,Dahisar,2
+Maharashtra,Mumbai,Vikhroli,2
+Maharashtra,Mumbai,Mira Road,2
+Maharashtra,Mumbai,Bhayandar,2
+Maharashtra,Mumbai,Malad,2
+Delhi,Delhi,South Delhi,0
+Delhi,Delhi,Vasant Vihar,0
+Delhi,Delhi,Defence Colony,0
+Delhi,Delhi,Greater Kailash,0
+Delhi,Delhi,Connaught Place,0
+Delhi,Delhi,Hauz Khas,0
+Delhi,Delhi,Dwarka,1
+Delhi,Delhi,Rohini,1
+Delhi,Delhi,Saket,1
+Delhi,Delhi,Janakpuri,1
+Delhi,Delhi,Pitampura,1
+Delhi,Delhi,Mayur Vihar,1
+Delhi,Delhi,Laxmi Nagar,2
+Delhi,Delhi,Uttam Nagar,2
+Delhi,Delhi,Narela,2
+Delhi,Delhi,Burari,2
+Delhi,Delhi,Mundka,2
+Delhi,Delhi,Badarpur,2
+Tamil Nadu,Chennai,Adyar,0
+Tamil Nadu,Chennai,Besant Nagar,0
+Tamil Nadu,Chennai,Anna Nagar,0
+Tamil Nadu,Chennai,T Nagar,0
+Tamil Nadu,Chennai,Nungambakkam,0
+Tamil Nadu,Chennai,Alwarpet,0
+Tamil Nadu,Chennai,Velachery,1
+Tamil Nadu,Chennai,OMR,1
+Tamil Nadu,Chennai,Porur,1
+Tamil Nadu,Chennai,Tambaram,1
+Tamil Nadu,Chennai,Mylapore,1
+Tamil Nadu,Chennai,Perungudi,1
+Tamil Nadu,Chennai,Avadi,2
+Tamil Nadu,Chennai,Ambattur,2
+Tamil Nadu,Chennai,Medavakkam,2
+Tamil Nadu,Chennai,Pallavaram,2
+Tamil Nadu,Chennai,Sholinganallur,2
+Tamil Nadu,Chennai,Perambur,2
+Maharashtra,Pune,Koregaon Park,0
+Maharashtra,Pune,Baner,0
+Maharashtra,Pune,Kalyani Nagar,0
+Maharashtra,Pune,Aundh,0
+Maharashtra,Pune,Kothrud,0
+Maharashtra,Pune,Viman Nagar,0
+Maharashtra,Pune,Hinjewadi,1
+Maharashtra,Pune,Wakad,1
+Maharashtra,Pune,Hadapsar,1
+Maharashtra,Pune,Magarpatta,1
+Maharashtra,Pune,Pimple Saudagar,1
+Maharashtra,Pune,Balewadi,1
+Maharashtra,Pune,Kharadi,2
+Maharashtra,Pune,Wagholi,2
+Maharashtra,Pune,Undri,2
+Maharashtra,Pune,Katraj,2
+Maharashtra,Pune,Chakan,2
+Maharashtra,Pune,Dhanori,2
+West Bengal,Kolkata,Alipore,0
+West Bengal,Kolkata,Ballygunge,0
+West Bengal,Kolkata,Salt Lake,0
+West Bengal,Kolkata,New Town,0
+West Bengal,Kolkata,Park Street,0
+West Bengal,Kolkata,Rajarhat,0
+West Bengal,Kolkata,Behala,1
+West Bengal,Kolkata,Jadavpur,1
+West Bengal,Kolkata,Dum Dum,1
+West Bengal,Kolkata,Garia,1
+West Bengal,Kolkata,Tollygunge,1
+West Bengal,Kolkata,Howrah,1
+West Bengal,Kolkata,Barasat,2
+West Bengal,Kolkata,Baranagar,2
+West Bengal,Kolkata,Sodepur,2
+West Bengal,Kolkata,Kasba,2
+West Bengal,Kolkata,Baguiati,2
+West Bengal,Kolkata,Madhyamgram,2
+Gujarat,Ahmedabad,SG Highway,0
+Gujarat,Ahmedabad,Bodakdev,0
+Gujarat,Ahmedabad,Satellite,0
+Gujarat,Ahmedabad,Prahlad Nagar,0
+Gujarat,Ahmedabad,Thaltej,0
+Gujarat,Ahmedabad,Vastrapur,1
+Gujarat,Ahmedabad,Bopal,1
+Gujarat,Ahmedabad,Gota,1
+Gujarat,Ahmedabad,Navrangpura,1
+Gujarat,Ahmedabad,Maninagar,1
+Gujarat,Ahmedabad,Naroda,2
+Gujarat,Ahmedabad,Chandkheda,2
+Gujarat,Ahmedabad,Nikol,2
+Gujarat,Ahmedabad,Vatva,2
+Gujarat,Ahmedabad,Narol,2
+Haryana,Gurugram,Golf Course Road,0
+Haryana,Gurugram,DLF Phase 1-5,0
+Haryana,Gurugram,Sushant Lok,0
+Haryana,Gurugram,Golf Course Extension,0
+Haryana,Gurugram,Sohna Road,1
+Haryana,Gurugram,Sector 82-95,1
+Haryana,Gurugram,Nirvana Country,1
+Haryana,Gurugram,Palam Vihar,1
+Haryana,Gurugram,Manesar,2
+Haryana,Gurugram,Dwarka Expressway,2
+Haryana,Gurugram,Sector 37D,2
+Haryana,Gurugram,Badshahpur,2
+Uttar Pradesh,Noida,Sector 50,0
+Uttar Pradesh,Noida,Sector 62,0
+Uttar Pradesh,Noida,Sector 18,0
+Uttar Pradesh,Noida,Sector 128,0
+Uttar Pradesh,Noida,Sector 137,1
+Uttar Pradesh,Noida,Sector 150,1
+Uttar Pradesh,Noida,Sector 75,1
+Uttar Pradesh,Noida,Sector 45,1
+Uttar Pradesh,Noida,Noida Extension,2
+Uttar Pradesh,Noida,Sector 168,2
+Uttar Pradesh,Noida,Greater Noida West,2
+Uttar Pradesh,Noida,Sector 119,2
+Rajasthan,Jaipur,Malviya Nagar,0
+Rajasthan,Jaipur,C-Scheme,0
+Rajasthan,Jaipur,Vaishali Nagar,0
+Rajasthan,Jaipur,Civil Lines,0
+Rajasthan,Jaipur,Mansarovar,1
+Rajasthan,Jaipur,Jagatpura,1
+Rajasthan,Jaipur,Tonk Road,1
+Rajasthan,Jaipur,Bani Park,1
+Rajasthan,Jaipur,Sanganer,2
+Rajasthan,Jaipur,Sikar Road,2
+Rajasthan,Jaipur,Ajmer Road,2
+Rajasthan,Jaipur,Vidhyadhar Nagar,2
+Uttar Pradesh,Lucknow,Gomti Nagar,0
+Uttar Pradesh,Lucknow,Hazratganj,0
+Uttar Pradesh,Lucknow,Vibhuti Khand,0
+Uttar Pradesh,Lucknow,Aliganj,1
+Uttar Pradesh,Lucknow,Indira Nagar,1
+Uttar Pradesh,Lucknow,Jankipuram,1
+Uttar Pradesh,Lucknow,Mahanagar,1
+Uttar Pradesh,Lucknow,Chinhat,2
+Uttar Pradesh,Lucknow,Kakori,2
+Uttar Pradesh,Lucknow,Alambagh,2
+Uttar Pradesh,Lucknow,Amausi,2
+Kerala,Kochi,Panampilly Nagar,0
+Kerala,Kochi,Marine Drive,0
+Kerala,Kochi,Kakkanad,0
+Kerala,Kochi,Edappally,1
+Kerala,Kochi,Vyttila,1
+Kerala,Kochi,Kaloor,1
+Kerala,Kochi,Thripunithura,1
+Kerala,Kochi,Aluva,2
+Kerala,Kochi,Angamaly,2
+Kerala,Kochi,Perumbavoor,2
+Kerala,Kochi,Tripunithura,2
+Chandigarh,Chandigarh,Sector 8,0
+Chandigarh,Chandigarh,Sector 9,0
+Chandigarh,Chandigarh,Sector 10,0
+Chandigarh,Chandigarh,Sector 11,0
+Chandigarh,Chandigarh,Sector 22,1
+Chandigarh,Chandigarh,Sector 35,1
+Chandigarh,Chandigarh,Sector 43,1
+Chandigarh,Chandigarh,Manimajra,1
+Chandigarh,Chandigarh,Sector 47,2
+Chandigarh,Chandigarh,Sector 52,2
+Chandigarh,Chandigarh,Sector 63,2
+Chandigarh,Chandigarh,Industrial Area,2
+Andhra Pradesh,Visakhapatnam,Rushikonda,0
+Andhra Pradesh,Visakhapatnam,Beach Road,0
+Andhra Pradesh,Visakhapatnam,MVP Colony,0
+Andhra Pradesh,Visakhapatnam,Madhurawada,1
+Andhra Pradesh,Visakhapatnam,Gajuwaka,1
+Andhra Pradesh,Visakhapatnam,Seethammadhara,1
+Andhra Pradesh,Visakhapatnam,Pendurthi,2
+Andhra Pradesh,Visakhapatnam,Anakapalle,2
+Andhra Pradesh,Visakhapatnam,Bheemili,2
+Madhya Pradesh,Indore,Vijay Nagar,0
+Madhya Pradesh,Indore,Palasia,0
+Madhya Pradesh,Indore,Scheme 78,0
+Madhya Pradesh,Indore,Bhawarkuan,1
+Madhya Pradesh,Indore,Saket Nagar,1
+Madhya Pradesh,Indore,AB Road,1
+Madhya Pradesh,Indore,Rau,2
+Madhya Pradesh,Indore,Super Corridor,2
+Madhya Pradesh,Indore,Bypass Road,2
+Maharashtra,Nagpur,Dharampeth,0
+Maharashtra,Nagpur,Civil Lines,0
+Maharashtra,Nagpur,Ramdaspeth,0
+Maharashtra,Nagpur,Manish Nagar,1
+Maharashtra,Nagpur,Wardha Road,1
+Maharashtra,Nagpur,Besa,1
+Maharashtra,Nagpur,Hingna,2
+Maharashtra,Nagpur,Kamptee Road,2
+Maharashtra,Nagpur,Koradi Road,2
+Tamil Nadu,Coimbatore,RS Puram,0
+Tamil Nadu,Coimbatore,Race Course,0
+Tamil Nadu,Coimbatore,Saibaba Colony,0
+Tamil Nadu,Coimbatore,Peelamedu,1
+Tamil Nadu,Coimbatore,Singanallur,1
+Tamil Nadu,Coimbatore,Saravanampatti,1
+Tamil Nadu,Coimbatore,Vadavalli,2
+Tamil Nadu,Coimbatore,Kuniyamuthur,2
+Tamil Nadu,Coimbatore,Sulur,2
+Maharashtra,Thane,Ghodbunder Road,0
+Maharashtra,Thane,Hiranandani Estate,0
+Maharashtra,Thane,Majiwada,0
+Maharashtra,Thane,Kolshet,1
+Maharashtra,Thane,Naupada,1
+Maharashtra,Thane,Vartak Nagar,1
+Maharashtra,Thane,Kalwa,2
+Maharashtra,Thane,Mumbra,2
+Maharashtra,Thane,Diva,2
+Maharashtra,Navi Mumbai,Vashi,0
+Maharashtra,Navi Mumbai,Nerul,0
+Maharashtra,Navi Mumbai,Palm Beach Road,0
+Maharashtra,Navi Mumbai,Kharghar,1
+Maharashtra,Navi Mumbai,Airoli,1
+Maharashtra,Navi Mumbai,Belapur,1
+Maharashtra,Navi Mumbai,Panvel,2
+Maharashtra,Navi Mumbai,Ulwe,2
+Maharashtra,Navi Mumbai,Taloja,2
+Gujarat,Surat,Vesu,0
+Gujarat,Surat,Adajan,0
+Gujarat,Surat,Piplod,0
+Gujarat,Surat,Althan,1
+Gujarat,Surat,Pal,1
+Gujarat,Surat,City Light,1
+Gujarat,Surat,Varachha,2
+Gujarat,Surat,Udhna,2
+Gujarat,Surat,Sachin,2
+Madhya Pradesh,Bhopal,Arera Colony,0
+Madhya Pradesh,Bhopal,Shahpura,0
+Madhya Pradesh,Bhopal,Kolar Road,0
+Madhya Pradesh,Bhopal,MP Nagar,1
+Madhya Pradesh,Bhopal,Bawadiya Kalan,1
+Madhya Pradesh,Bhopal,Hoshangabad Road,1
+Madhya Pradesh,Bhopal,Ayodhya Bypass,2
+Madhya Pradesh,Bhopal,Misrod,2
+Madhya Pradesh,Bhopal,Bairagarh,2
+Bihar,Patna,Boring Road,0
+Bihar,Patna,Kankarbagh,0
+Bihar,Patna,Patliputra,0
+Bihar,Patna,Rajendra Nagar,1
+Bihar,Patna,Danapur,1
+Bihar,Patna,Bailey Road,1
+Bihar,Patna,Phulwari Sharif,2
+Bihar,Patna,Khagaul,2
+Bihar,Patna,Bihta,2
+,,Bangalore,0
+,,Goa,0
+,,Mysore,1
+,,Pimpri-Chinchwad,1
+,,Allahabad,2
+,,Dhule,2
+,,Latur,2
+,,Akola,2
+,,Dharwad,2
+,,Ooty,2
+,,Pondicherry,2

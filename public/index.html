@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PriceNest | House Price Prediction</title>
+<style>:root{--navy:#0f2744;--head:#0f2744;--teal:#0d9488;--bg:#f5f7fa;--surface:#fff;--text:#1f2937;--muted:#6b7280;--line:#e2e8f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--head:#e5edf7;--bg:#1a1f27;--surface:#222831;--text:#e5e7eb;--muted:#9aa3af;--line:#363d48}}
+:root[data-theme="dark"]{--head:#e5edf7;--bg:#1a1f27;--surface:#222831;--text:#e5e7eb;--muted:#9aa3af;--line:#363d48}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);background:var(--surface);line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.section{padding:56px 20px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.15;margin:0 0 16px}
+h2{font-size:28px;margin:0 0 24px;color:var(--head)}
+.nav{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);z-index:5}
+.nav{padding-top:env(safe-area-inset-top,0px)}.nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+.logo{font-weight:800;font-size:22px;color:var(--head);text-decoration:none}.logo span{color:var(--teal)}
+nav a{margin-left:24px;color:var(--text);text-decoration:none;font-size:15px}
+.hero{background:linear-gradient(135deg,var(--navy),#1e4f7a);color:#fff;padding:72px 0 48px}
+.hero p{max-width:620px;font-size:18px;opacity:.9}
+.btn{display:inline-block;background:var(--teal);color:#fff;border:0;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.stats{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap}
+.stats b{display:block;font-size:28px}.stats span{font-size:14px;opacity:.8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card h3{margin-top:0;color:var(--head)}
+[hidden]{display:none!important}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:999px;padding:4px 12px;margin:4px 6px 4px 0;font-size:14px;cursor:pointer}.chip:hover{border-color:var(--teal);color:var(--teal)}
+.badge{display:inline-block;background:var(--teal);color:#fff;border-radius:999px;padding:2px 12px;font-size:14px;margin-left:8px;vertical-align:middle}
+label{display:block;font-size:14px;font-weight:600;margin-bottom:14px}
+input,select{display:block;width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:16px;background:var(--surface);color:var(--text)}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.result{display:flex;flex-direction:column;justify-content:center;background:var(--bg)}
+.price{font-size:38px;font-weight:800;color:var(--head);margin:4px 0}
+.muted{color:var(--muted)}.err{color:#b91c1c;font-weight:600}
+.band{background:var(--bg)}
+details{border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:12px}
+summary{cursor:pointer;font-weight:600}
+footer{background:var(--navy);color:#cbd5e1;padding:24px 0;font-size:14px;text-align:center}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}.result{order:2}nav{display:none}}
+</style></head><body>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#">Price<span>Nest</span></a>
+  <nav><a href="#estimate">Estimate</a><a href="#how">How it works</a><a href="#faq">FAQ</a></nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <h1>Know what a home is worth, in seconds.</h1>
+  <p>PriceNest uses a data-driven regression model to estimate property prices across Hyderabad's key localities, so you can buy, sell, or invest with confidence.</p>
+  <a class="btn" href="#estimate">Get a free estimate</a>
+  <div class="stats">
+    <div><b id="s-rows">-</b><span>Properties analysed</span></div>
+    <div><b id="s-r2">-</b><span>Model accuracy (R²)</span></div>
+    <div><b>36</b><span>States &amp; UTs covered</span></div>
+  </div>
+</div></section>
+
+<section id="estimate" class="wrap section">
+  <h2>Estimate your property price</h2>
+  <div class="grid2">
+    <div class="card result" id="result">
+      <p class="muted">Fill in the details and press <b>Predict price</b>.</p>
+    </div>
+    <form id="form" class="card">
+      <label>State / UT<select id="state"></select></label>
+      <label>City<select id="city"></select></label>
+      <label>Area / locality <span class="muted" id="areaCount"></span><select id="areaSel"></select></label>
+      <label id="otherWrap" hidden>Type your area / place<input id="locality" list="places" placeholder="e.g. your colony, village or town" autocomplete="off"><datalist id="places"></datalist></label>
+      <label>Built-up area (sqft)<input id="area" type="number" value="1200" min="200" max="20000" required></label>
+      <div class="row">
+        <label>Bedrooms<input id="bedrooms" type="number" value="2" min="1" max="10" required></label>
+        <label>Bathrooms<input id="bathrooms" type="number" value="2" min="1" max="10" required></label>
+        <label>Age (yrs)<input id="age" type="number" value="5" min="0" max="100" required></label>
+      </div>
+      <button class="btn" type="submit">Predict price</button>
+    </form>
+  </div>
+  <div class="card" id="areaPanel" style="margin-top:24px"></div>
+  <div class="card" id="history" style="margin-top:24px"></div>
+</section>
+
+<section id="how" class="band"><div class="wrap section">
+  <h2>How it works</h2>
+  <div class="grid3">
+    <div class="card"><h3>1. Enter details</h3><p>Tell us the locality, size, rooms and age of the property.</p></div>
+    <div class="card"><h3>2. Model runs</h3><p>A multiple linear regression trained on property data calculates the expected price.</p></div>
+    <div class="card"><h3>3. Get a range</h3><p>You receive a point estimate, a likely price range, and the price per square foot.</p></div>
+  </div>
+</div></section>
+
+<section id="faq" class="wrap section">
+  <h2>Frequently asked questions</h2>
+  <details><summary>How accurate are the estimates?</summary><p>Accuracy depends on the training data. The R² score above shows how much of the price variation the model explains. Treat results as a guide, not a valuation.</p></details>
+  <details><summary>What do the localities mean for price?</summary><p>Every city and area is grouped into a premium, mid-range or affordable tier. If you type a place we do not list, an average small-city rate is used.</p></details>
+  <details><summary>Can I use my own data?</summary><p>Yes. Place a <code>data.csv</code> next to the server (sqft, bedrooms, bathrooms, age, tier, price) and restart; the model retrains automatically.</p></details>
+</section>
+
+<footer><div class="wrap">© 2026 PriceNest. Estimates are indicative only and not a formal property valuation.</div></footer>
+<script>
+const $=id=>document.getElementById(id),T=['Premium areas','Mid-range areas','Affordable areas'];
+const fmt=l=>l>=100?'₹ '+(l/100).toFixed(2)+' Cr':'₹ '+l.toFixed(1)+' Lakh';
+let ST=[];
+const cities=()=>ST.find(s=>s.name===$('state').value).cities;
+const areas=()=>{const c=cities().find(c=>c.name===$('city').value);return c?c.areas:[]};
+function fillCities(){$('city').innerHTML=cities().map(c=>c.name).concat('Other (not listed)').map(c=>`<option>${c}</option>`).join('');fillAreas()}
+function fillAreas(){const L=areas(),c=$('city').value;
+ $('areaSel').innerHTML=(L.length?['Whole city (average)'].concat(L.map(a=>a.n)):[]).concat('Other (type your own)').map(a=>`<option>${a}</option>`).join('');
+ $('areaCount').textContent=L.length?'('+L.length+' areas in '+c+')':'';
+ if(!L.length)$('areaSel').value='Other (type your own)';
+ renderAreas();toggleOther()}
+function toggleOther(){$('otherWrap').hidden=!$('areaSel').value.startsWith('Other')}
+function renderAreas(){const c=$('city').value,L=areas(),P=$('areaPanel');
+ if(!L.length){P.innerHTML=`<h3>Areas in ${c.startsWith('Other')?'this city':c}<span class="badge">0</span></h3><p class="muted">No area list for this city yet. Choose "Other (type your own)" and type your area.</p>`;return}
+ P.innerHTML=`<h3>Areas in ${c}<span class="badge">${L.length} areas</span></h3><p class="muted">Click an area to get its price estimate.</p>`+
+ [0,1,2].map(t=>{const g=L.filter(a=>a.t===t);return g.length?`<p><b>${T[t]} (${g.length})</b><br>${g.map(a=>`<button type="button" class="chip" data-a="${a.n}">${a.n}</button>`).join('')}</p>`:''}).join('')}
+async function loadHistory(){const H=await fetch('/api/history').then(r=>r.json());
+ $('history').innerHTML='<h3>Recent estimates <span class="muted">(saved by the server)</span></h3>'+(H.length?H.map(x=>`<p style="margin:6px 0">${x.place} · ${x.sqft} sqft · <b>${fmt(x.price)}</b></p>`).join(''):'<p class="muted">No estimates yet.</p>')}
+$('state').addEventListener('change',fillCities);$('city').addEventListener('change',fillAreas);$('areaSel').addEventListener('change',toggleOther);
+$('areaPanel').addEventListener('click',e=>{const a=e.target.dataset&&e.target.dataset.a;if(!a)return;$('areaSel').value=a;toggleOther();$('form').requestSubmit()});
+$('form').addEventListener('submit',async e=>{e.preventDefault();
+ const sv=$('areaSel').value,typed=sv.startsWith('Other'),
+  body={state:$('state').value,city:$('city').value,area:typed?$('locality').value.trim():(sv.startsWith('Whole')?'':sv),
+  sqft:+$('area').value,bedrooms:+$('bedrooms').value,bathrooms:+$('bathrooms').value,age:+$('age').value};
+ if(typed&&!body.area&&body.city.startsWith('Other'))return $('result').innerHTML='<p class="err">Please type your place, or choose a city from the list.</p>';
+ try{const r=await fetch('/api/predict',{method:'POST',body:JSON.stringify(body)}),d=await r.json();if(!r.ok)throw new Error(d.error);
+  $('result').innerHTML=`<p class="muted">Estimated price for ${d.place}</p><div class="price">${fmt(d.price)}</div>
+  <p>Likely range: <b>${fmt(d.low)}</b> to <b>${fmt(d.high)}</b></p><p class="muted">≈ ₹ ${Number(d.perSqft).toLocaleString('en-IN')} per sqft</p>`+(d.known?'':'<p class="muted">This place is not in our list, so an average small-city rate was used.</p>');
+  loadHistory()}catch(err){$('result').innerHTML=`<p class="err">${err.message}</p>`}});
+(async()=>{const[l,m]=await Promise.all([fetch('/api/locations').then(r=>r.json()),fetch('/api/model').then(r=>r.json())]);
+ ST=l.states;$('s-rows').textContent=m.trainingRows.toLocaleString();$('s-r2').textContent=(m.r2*100).toFixed(1)+'%';
+ $('state').innerHTML=ST.map(s=>`<option>${s.name}</option>`).join('');$('state').value='Telangana';fillCities();$('city').value='Hyderabad';fillAreas();
+ loadHistory();$('form').requestSubmit()})();
+</script></body></html>
